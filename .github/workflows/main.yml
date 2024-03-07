@@ -15,15 +15,15 @@ jobs:
           image: debian:bookworm
           options: -v ${{ github.workspace }}:/build
           run: |
-            sudo apt update -y >/dev/null
-            sudo apt install git wget -y >/dev/null
+            apt update -y >/dev/null
+            apt install git wget sudo -y >/dev/null
             cd build
             git clone git://git.proxmox.com/git/pve-qemu.git
             cd pve-qemu
             git reset --hard 0d4462207ba23931c168a5d674ee356517e86ba6
             sed -i 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
             wget https://raw.githubusercontent.com/zhaodice/qemu-anti-detection/main/qemu-8.1.0.patch -O qemu/001-anti-detection.patch
-            sudo apt install devscripts -y >/dev/null
+            apt install devscripts -y >/dev/null
             sudo mk-build-deps --install -y
             #git submodule update --init --recursive
             make
