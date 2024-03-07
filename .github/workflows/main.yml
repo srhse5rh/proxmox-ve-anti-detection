@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: set env
         run: |
-          if [ ! "${{ inputs.patch }}' = '' ];
+          if [ ! '${{ inputs.patch }}' = '' ];
           then
             echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
           fi
