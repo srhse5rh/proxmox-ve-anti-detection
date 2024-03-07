@@ -15,8 +15,8 @@ jobs:
           image: debian:bookworm
           options: -v ${{ github.workspace }}:/build
           run: |
-            apt update
-            apt install git
+            apt update && apt upgrade -y
+            apt install git -y
             cd build
             git clone git://git.proxmox.com/git/pve-qemu.git
             cd pve-qemu
@@ -24,7 +24,7 @@ jobs:
             # git submodule update --init --recursive
             sed -u 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
             wget https://raw.githubusercontent.com/zhaodice/qemu-anti-detection/main/qemu-8.1.0.patch -O qemu/001-anti-detection.patch
-            apt install devscripts
+            apt install devscripts -y
             mk-build-deps --install
             make
       - name: Upload a Build Artifact
