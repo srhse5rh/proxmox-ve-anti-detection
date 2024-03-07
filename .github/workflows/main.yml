@@ -2,6 +2,17 @@ name: build
 
 on:
   workflow_dispatch:
+    inputs:
+      patch:
+        description: "patch"
+        required: false
+        default: false
+        type: string
+      commitid:
+        description: "commitid"
+        required: false
+        default: false
+        type: string
   push:
 
 jobs:
