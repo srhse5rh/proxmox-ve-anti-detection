@@ -30,7 +30,7 @@ jobs:
         run: |
           if [ ! '${{ inputs.patch }}' ]
           then
-            echo "${{ inputs.patch }}" >> "${{ github.env }}"
+            echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
           fi
           if [ '${{ inputs.commitid }}' ]
           then
