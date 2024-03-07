@@ -1,0 +1,32 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          path: build
+          image: debian:bookworm
+          options: -v ${{ github.workspace }}:/build
+          run: |
+            cd build
+            git clone git://git.proxmox.com/git/pve-qemu.git
+            cd pve-qemu
+            git reset --hard 0d4462207ba23931c168a5d674ee356517e86ba6
+            # git submodule update --init --recursive
+            sed -u 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
+            wget https://raw.githubusercontent.com/zhaodice/qemu-anti-detection/main/qemu-8.1.0.patch -O qemu/001-anti-detection.patch
+            apt install devscripts
+            mk-build-deps --install
+            make
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          path: pve-qemu/*.deb
