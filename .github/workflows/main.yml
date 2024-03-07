@@ -21,6 +21,7 @@ jobs:
             wget https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg
             apt update
             # apt install devscripts proxmox-ve -y
+            apt install make mk-build-deps -y
             cd build
             git clone git://git.proxmox.com/git/pve-qemu.git
             cd pve-qemu
