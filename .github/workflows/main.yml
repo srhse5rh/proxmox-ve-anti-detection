@@ -16,13 +16,13 @@ jobs:
           options: -v ${{ github.workspace }}:/build
           run: |
             apt update && apt upgrade -y
-            apt install git -y
+            apt install git wget -y
             cd build
             git clone git://git.proxmox.com/git/pve-qemu.git
             cd pve-qemu
             git reset --hard 0d4462207ba23931c168a5d674ee356517e86ba6
             # git submodule update --init --recursive
-            sed -u 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
+            sed -u "s/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/" debian/rules
             wget https://raw.githubusercontent.com/zhaodice/qemu-anti-detection/main/qemu-8.1.0.patch -O qemu/001-anti-detection.patch
             apt install devscripts -y
             mk-build-deps --install
