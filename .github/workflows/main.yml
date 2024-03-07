@@ -28,15 +28,15 @@ jobs:
     steps:
       - name: set env
         run: |
-          if [ ! '${{ inputs.patch }}' ];
+          if [ ! "${{ inputs.patch }}' = '' ];
           then
             echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
           fi
-          if [ ! '${{ inputs.commitid }}' ];
+          if [ ! '${{ inputs.commitid }}' = '' ];
           then
             echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
           fi
-          if [ ! '${{ inputs.debianversion }}' ];
+          if [ ! '${{ inputs.debianversion }}' = '' ];
           then
             echo "debianversion=${{ inputs.debianversion }}" >> "${{ github.env }}"
           fi
