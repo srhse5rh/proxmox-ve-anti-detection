@@ -12,7 +12,6 @@ jobs:
       - name: Run the build process with Docker
         uses: addnab/docker-run-action@v3
         with:
-          path: build
           image: debian:bookworm
           options: -v ${{ github.workspace }}:/build
           run: |
