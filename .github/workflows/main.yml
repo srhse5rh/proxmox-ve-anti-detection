@@ -32,7 +32,7 @@ jobs:
           then
             echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
           fi
-          if [ '${{ inputs.commitid }}' ]
+          if [ ! '${{ inputs.commitid }}' ]
           then
             echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
           fi
