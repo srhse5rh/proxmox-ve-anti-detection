@@ -19,7 +19,7 @@ on:
 
 env:
   patch: https://raw.githubusercontent.com/zhaodice/qemu-anti-detection/main/qemu-8.1.0.patch
-  commitid: 0d4462207ba23931c168a5d674ee356517e86ba6
+  commitid: e62423e6156b7bf9afd8b670722c66c93fd2ba45
   debianversion: bookworm
 
 jobs:
@@ -40,6 +40,7 @@ jobs:
           then
             echo "debianversion=${{ inputs.debianversion }}" >> "${{ github.env }}"
           fi
+
       - uses: actions/checkout@v4
       - name: Run the build process with Docker
         uses: addnab/docker-run-action@v3
@@ -49,21 +50,27 @@ jobs:
           run: |
             apt update
             apt install git wget -y
-            echo "deb [arch=amd64] http://download.proxmox.com/debian/pve ${{ env.debianversion }} pve-no-subscription" > /etc/apt/sources.list.d/pve-install-repo.list
+            echo "deb http://download.proxmox.com/debian/pve ${{ env.debianversion }} pve-no-subscription" > /etc/apt/sources.list.d/pve-install-repo.list
+            echo "deb http://download.proxmox.com/debian/devel ${{ env.debianversion }} main" >> /etc/apt/sources.list
             wget https://enterprise.proxmox.com/debian/proxmox-release-${{ env.debianversion }}.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-${{ env.debianversion }}.gpg
             apt update
             apt install devscripts proxmox-ve -y
             cd build
-            git clone git://git.proxmox.com/git/pve-qemu.git
-            cd pve-qemu
+            git clone git://git.proxmox.com/git/pve-qemu.git gitclone
+            mv gitclone/* gitclone/.* .
+            rm -r gitclone
             git reset --hard ${{ env.commitid }}
             git submodule update --init
             sed -i 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
             sed -i 's/--disable-download//' debian/rules
             wget ${{ env.patch }} -O qemu/001-anti-detection.patch
-            mk-build-deps --install --tool "apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y"
+            mk-build-deps --install --tool "apt-get -o Debug::pkgProblemResolver=yes -y"
             make
+            
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.1
         with:
-          path: pve-qemu/*.deb
+          path: |
+            *.deb
+            *.buildinfo
+            *.changes
