@@ -59,6 +59,7 @@ jobs:
           sudo apt install -y devscripts dh-virtualenv sphinx-common dh-python debhelper equivs openjdk-17-jre libbabeltrace-dev binutils-dev libperl-dev systemtap-sdt-dev libperl-dev
 
       - run: |
+          git config --global --add safe.directory '*'
           git clone git://git.proxmox.com/git/pve-qemu.git gitclone
           mv gitclone/* gitclone/.* .
           rm -r gitclone
