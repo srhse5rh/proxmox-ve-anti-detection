@@ -70,7 +70,7 @@ jobs:
           git submodule status > hash-submodules
 
       - run: |
-          sudo mk-build-deps -it "apt -y" debian/control
+          sudo mk-build-deps -it "sudo apt -y" debian/control
   
       - name: Restore cached QEMU
         id: cache-qemu-restore
