@@ -53,7 +53,7 @@ jobs:
           ref: ${{ env.commitid }}
 
       - run: |
-          suod apt update
+          sudo apt update
           sudo apt install git wget -y
           <<<"deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" sudo tee /etc/apt/sources.list.d/pve-no-subscription.list
           <<<"deb http://download.proxmox.com/debian/devel bookworm main" sudo tee -a /etc/apt/sources.list.d/pve-devel.list
