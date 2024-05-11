@@ -60,6 +60,7 @@ jobs:
           sudo wget "https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg" -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg
           sudo sed -i 's/# deb-src/deb-src/g' /etc/apt/sources.list
           sudo apt-get update
+          sudo apt-get build-dep qemu
           sudo apt-get install -y devscripts
 
       - run: |
