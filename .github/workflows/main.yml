@@ -22,12 +22,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: proxmox/pve-qemu
-          fetch-depth: 0
-          ref: ${{ env.commitid }}
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: proxmox/pve-qemu
+      #     fetch-depth: 0
+      #     submodules: 'true'
+      #     ref: ${{ env.commitid }}
 
       - name: set env
         run: |
@@ -39,7 +40,7 @@ jobs:
           then
             echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
           fi
-          echo "modulehash=$(git submodule status)" > "${{ github.env }}"
+          # echo "modulehash=$(git submodule status)" > "${{ github.env }}"
 
   build:
     runs-on: ubuntu-latest
@@ -103,26 +104,26 @@ jobs:
           sudo apt-get install equivs
           sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -f -y"
 
-      - name: Restore cached QEMU
-        id: cache-qemu-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            qemu
-          key: qemu-${{ env.modulehash }}
+      # - name: Restore cached QEMU
+      #   id: cache-qemu-restore
+      #   uses: actions/cache/restore@v4
+      #   with:
+      #     path: |
+      #       qemu
+      #     key: qemu-${{ env.modulehash }}
 
-      - name: make submodule
-        if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
-        run: |
-          make submodule
+      # - name: make submodule
+      #   if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
+      #   run: |
+      #     make submodule
 
-      - name: Save QEMU
-        id: cache-primes-save
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            qemu
-          key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
+      # - name: Save QEMU
+      #   id: cache-primes-save
+      #   uses: actions/cache/save@v4
+      #   with:
+      #     path: |
+      #       qemu
+      #     key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
 
       - run: |
           sed -i 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
