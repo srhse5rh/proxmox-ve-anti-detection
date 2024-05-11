@@ -45,7 +45,6 @@ jobs:
     steps:
 
       - name: Checkout
-        if: ${{ inputs.reset_head }}
         uses: actions/checkout@v4
         with:
           repository: proxmox/pve-qemu
