@@ -83,7 +83,7 @@ jobs:
       - name: Debugging with tmate
         run: |
           sudo apt-get install tmate
-          tmate
+          tmate -F new-session bash
   
       - name: Restore cached QEMU
         id: cache-qemu-restore
