@@ -22,6 +22,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: proxmox/pve-qemu
+          fetch-depth: 0
+          ref: ${{ env.commitid }}
+
       - name: set env
         run: |
           if [ '${{ inputs.patch }}' != '' ];
@@ -32,6 +39,7 @@ jobs:
           then
             echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
           fi
+          echo "modulehash=$(git submodule status) > "${{ github.env }}"
 
   build:
     runs-on: ubuntu-latest
@@ -101,7 +109,7 @@ jobs:
         with:
           path: |
             qemu
-          key: qemu-${{ hashFiles('hash-submodules') }}
+          key: qemu-${{ env.modulehash }}
 
       - run: make submodule
         if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
