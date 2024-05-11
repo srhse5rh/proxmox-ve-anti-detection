@@ -66,9 +66,25 @@ jobs:
 
       - run: |
           mk-build-deps -it "apt -y" debian/control
+  
+      - name: Restore cached QEMU
+        id: cache-qemu-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            qemu
+          key: qemu-${{ hashFiles('hash-submodules') }}
 
       - run: make submodule
-        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
+  
+      - name: Save QEMU
+        id: cache-primes-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            qemu
+          key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
 
       - run: |
           sed -i 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
