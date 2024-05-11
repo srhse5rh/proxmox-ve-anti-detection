@@ -43,16 +43,6 @@ jobs:
     needs: setenv
 
     steps:
-      - name: set env
-        run: |
-          if [ '${{ inputs.patch }}' != '' ];
-          then
-            echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
-          fi
-          if [ '${{ inputs.commitid }}' != '' ];
-          then
-            echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
-          fi
 
       - uses: actions/checkout@v4
 
