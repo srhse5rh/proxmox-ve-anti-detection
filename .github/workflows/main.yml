@@ -44,13 +44,6 @@ jobs:
 
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: proxmox/pve-qemu
-          fetch-depth: 0
-          ref: ${{ env.commitid }}
-
       - name: build
         run: |
           apt-get update
@@ -80,6 +73,13 @@ jobs:
           sudo apt-get -y build-dep qemu
           sudo apt-get -y install devscripts
 
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: proxmox/pve-qemu
+          fetch-depth: 0
+          ref: ${{ env.commitid }}
+
       - run: |
           # git config --global --add safe.directory '*'
           # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
@@ -87,7 +87,7 @@ jobs:
           # rm -r gitclone
           # git reset --hard ${{ env.commitid }}
           # git rev-parse HEAD > hash-main
-          git submodule status > hash-submodules
+          # git submodule status > hash-submodules
 
       - name: Install
         continue-on-error: true
