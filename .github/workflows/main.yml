@@ -87,6 +87,7 @@ jobs:
         with:
           repository: proxmox/pve-qemu
           fetch-depth: 0
+          submodules: 'true'
           ref: ${{ env.commitid }}
 
       - run: |
