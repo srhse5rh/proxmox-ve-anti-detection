@@ -53,6 +53,11 @@ jobs:
 
       - name: build
         run: |
+          apt-get update
+          apt-get -y sudo
+
+      - name: build
+        run: |
           sudo apt-get update
           sudo apt-get -y install git wget
           <<<"deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" sudo tee /etc/apt/sources.list.d/pve-no-subscription.list
