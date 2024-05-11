@@ -35,11 +35,11 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    defaults:
-      run:
-        shell: bash
+    # container:
+    #   image: debian:bookworm
+    # defaults:
+    #   run:
+    #     shell: bash
     needs: setenv
 
     steps:
