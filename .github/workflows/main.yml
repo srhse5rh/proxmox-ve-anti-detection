@@ -130,10 +130,10 @@ jobs:
           sed -i 's/--disable-download//' debian/rules
           wget ${{ env.patch }} -O qemu/001-anti-detection.patch
 
-      - name: Debugging with tmate
-        run: |
-          sudo apt-get -y install tmate
-          tmate -F new-session bash
+      # - name: Debugging with tmate
+      #   run: |
+      #     sudo apt-get -y install tmate
+      #     tmate -F new-session bash
 
       - run: make
             
