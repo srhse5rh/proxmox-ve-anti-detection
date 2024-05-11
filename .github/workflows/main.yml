@@ -39,7 +39,7 @@ jobs:
           then
             echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
           fi
-          echo "modulehash=$(git submodule status) > "${{ github.env }}"
+          echo "modulehash=$(git submodule status)" > "${{ github.env }}"
 
   build:
     runs-on: ubuntu-latest
