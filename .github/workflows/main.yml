@@ -71,7 +71,7 @@ jobs:
 
       - run: |
           sudo apt install equivs
-          sudo mk-build-deps -it "apt -y" || echo retry...
+          sudo bash -c 'mk-build-deps -it "apt -y" || echo error, retry...'
           make clean
           sudo mk-build-deps -it "apt -y"
   
