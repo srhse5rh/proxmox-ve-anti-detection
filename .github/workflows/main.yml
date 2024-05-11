@@ -89,13 +89,13 @@ jobs:
           ref: ${{ env.commitid }}
 
       - run: |
-          # git config --global --add safe.directory '*'
+          git config --global --add safe.directory '*'
           # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
           # mv gitclone/* gitclone/.* .
           # rm -r gitclone
           # git reset --hard ${{ env.commitid }}
           # git rev-parse HEAD > hash-main
-          # git submodule status > hash-submodules
+          git submodule status > hash-submodules
 
       - name: Install
         continue-on-error: true
@@ -111,9 +111,11 @@ jobs:
             qemu
           key: qemu-${{ env.modulehash }}
 
-      - run: make submodule
+      - name: make submodule
         if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
-  
+        run: |
+          make submodule
+
       - name: Save QEMU
         id: cache-primes-save
         uses: actions/cache/save@v4
