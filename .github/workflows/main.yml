@@ -18,6 +18,21 @@ env:
   commitid: e62423e6156b7bf9afd8b670722c66c93fd2ba45
 
 jobs:
+  setenv:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: set env
+        run: |
+          if [ '${{ inputs.patch }}' != '' ];
+          then
+            echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
+          fi
+          if [ '${{ inputs.commitid }}' != '' ];
+          then
+            echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
+          fi
+
   build:
     runs-on: ubuntu-latest
     container:
