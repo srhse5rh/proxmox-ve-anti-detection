@@ -85,7 +85,7 @@ jobs:
           # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
           # mv gitclone/* gitclone/.* .
           # rm -r gitclone
-          git reset --hard ${{ env.commitid }}
+          # git reset --hard ${{ env.commitid }}
           # git rev-parse HEAD > hash-main
           git submodule status > hash-submodules
 
