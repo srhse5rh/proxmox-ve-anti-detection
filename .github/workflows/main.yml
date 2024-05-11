@@ -75,10 +75,11 @@ jobs:
           # git rev-parse HEAD > hash-main
           git submodule status > hash-submodules
 
-      - run: |
-          sudo apt-get install equivs
-          sudo mk-build-deps -it "apt -y"
+      - name: Install
         continue-on-error: true
+        run: |
+          sudo apt-get install equivs
+          sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -y"
 
       # - name: Debugging with tmate
       #   run: |
