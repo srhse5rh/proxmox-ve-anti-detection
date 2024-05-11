@@ -110,7 +110,7 @@ jobs:
       #   with:
       #     path: |
       #       qemu
-      #     key: qemu-${{ env.modulehash }}
+      #     key: qemu-${{ env.commitid }}
 
       # - name: make submodule
       #   if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
@@ -140,6 +140,7 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.1
         with:
+          name: pve-qemu-${{ env.commitid }}
           path: |
             *.deb
             *.buildinfo
