@@ -82,7 +82,7 @@ jobs:
       #     sudo mk-build-deps -it "apt -y"
       - name: Debugging with tmate
         run: |
-          apt-get install tmate
+          sudo apt-get install tmate
           tmate
   
       - name: Restore cached QEMU
