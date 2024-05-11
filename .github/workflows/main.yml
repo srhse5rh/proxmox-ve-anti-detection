@@ -77,8 +77,8 @@ jobs:
       - name: build
         run: |
           sudo apt-get update
-          sudo apt-get build-dep qemu
-          sudo apt-get install -y devscripts
+          sudo apt-get -y build-dep qemu
+          sudo apt-get -y install devscripts
 
       - run: |
           # git config --global --add safe.directory '*'
