@@ -87,7 +87,7 @@ jobs:
           # rm -r gitclone
           # git reset --hard ${{ env.commitid }}
           # git rev-parse HEAD > hash-main
-          # git submodule status > hash-submodules
+          git submodule status > hash-submodules
 
       - name: Install
         continue-on-error: true
