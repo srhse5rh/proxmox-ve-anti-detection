@@ -75,11 +75,13 @@ jobs:
           # git rev-parse HEAD > hash-main
           git submodule status > hash-submodules
 
-      - run: |
-          sudo apt-get install equivs
-          sudo bash -c 'mk-build-deps -it "apt -y" || echo error, retry...'
-          make clean
-          sudo mk-build-deps -it "apt -y"
+      # - run: |
+      #     sudo apt-get install equivs
+      #     sudo bash -c 'mk-build-deps -it "apt -y" || echo error, retry...'
+      #     make clean
+      #     sudo mk-build-deps -it "apt -y"
+      - name: Debugging with tmate
+        uses: mxschmitt/action-tmate@v3
   
       - name: Restore cached QEMU
         id: cache-qemu-restore
