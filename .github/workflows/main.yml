@@ -72,10 +72,10 @@ jobs:
           path: qemu
           key: qemu-${{ hashFiles('hash-submodules') }}
 
-      - run: make submodule
-
       - run: |
           sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -y" debian/control
+
+      - run: make submodule
 
       - run: |
           sed -i 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
