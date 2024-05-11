@@ -81,7 +81,9 @@ jobs:
       #     make clean
       #     sudo mk-build-deps -it "apt -y"
       - name: Debugging with tmate
-        uses: mxschmitt/action-tmate@v3
+        run: |
+          apt-get install tmate
+          tmate
   
       - name: Restore cached QEMU
         id: cache-qemu-restore
