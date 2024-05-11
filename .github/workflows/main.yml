@@ -71,7 +71,9 @@ jobs:
 
       - run: |
           sudo apt install equivs
-          sudo mk-build-deps -it "apt -y" debian/control
+          sudo mk-build-deps -it "apt -y" || echo retry...
+          make clean
+          sudo mk-build-deps -it "apt -y"
   
       - name: Restore cached QEMU
         id: cache-qemu-restore
