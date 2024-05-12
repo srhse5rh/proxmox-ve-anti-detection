@@ -124,7 +124,7 @@ jobs:
           sed -i 's/--disable-download//' debian/rules
           cd qemu
           num=001
-          for i in '${{ env.patch}}'; do
+          for i in ${{ env.patch }}; do
             wget "$i" -O $num.patch
             patch -p1 < $num.patch
             ((num++))
