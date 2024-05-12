@@ -14,8 +14,11 @@ on:
         type: string
 
 env:
-  patch1: https://github.com/zhaodice/qemu-anti-detection/raw/main/qemu-8.1.0.patch
-  patch2: https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/002-change-to-amd.patch
+  patchs: |
+    https://github.com/zhaodice/qemu-anti-detection/raw/main/qemu-8.1.0.patch
+    https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/002-to-amd.patch
+    https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/003-disable-some-acpitable.patch
+    
   commitid: e62423e6156b7bf9afd8b670722c66c93fd2ba45
 
 jobs:
