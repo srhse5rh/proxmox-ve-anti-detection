@@ -14,7 +14,8 @@ on:
         type: string
 
 env:
-  patch: https://raw.githubusercontent.com/srhse5rh/qemu-anti-detection/main/qemu-8.1.0.patch
+  patch1: https://github.com/zhaodice/qemu-anti-detection/raw/main/qemu-8.1.0.patch
+  patch2: https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/002-change-to-amd.patch
   commitid: e62423e6156b7bf9afd8b670722c66c93fd2ba45
 
 jobs:
@@ -32,9 +33,13 @@ jobs:
 
       - name: set env
         run: |
-          if [ '${{ inputs.patch }}' != '' ];
+          if [ '${{ inputs.patch1 }}' != '' ];
           then
-            echo "patch=${{ inputs.patch }}" >> "${{ github.env }}"
+            echo "patch1=${{ inputs.patch1 }}" >> "${{ github.env }}"
+          fi
+          if [ '${{ inputs.patch2 }}' != '' ];
+          then
+            echo "patch2=${{ inputs.patch2 }}" >> "${{ github.env }}"
           fi
           if [ '${{ inputs.commitid }}' != '' ];
           then
@@ -126,9 +131,12 @@ jobs:
       #     key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
 
       - run: |
-          sed -i 's/# guest-agent is only required for guest systems/patch -p1 < 001-anti-detection.patch/' debian/rules
           sed -i 's/--disable-download//' debian/rules
-          wget ${{ env.patch }} -O qemu/001-anti-detection.patch
+          wget ${{ env.patch1 }} -O qemu/001.patch
+          wget ${{ env.patch2 }} -O qemu/002.patch
+          cd qemu
+          patch -p1 < 001.patch
+          patch -p1 < 002.patch
 
       # - name: Debugging with tmate
       #   run: |
