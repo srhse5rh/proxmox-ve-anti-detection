@@ -1,3 +1,16 @@
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 5582d5a0e7..2493edfb1b 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -1728,7 +1728,7 @@ void acpi_table_begin(AcpiTable *desc, GArray *array)
+     /* OEM Table ID */
+     build_append_padded_str(array, ACPI_BUILD_APPNAME8, 8, '\0'); //desc->oem_table_id
+     build_append_int_noprefix(array, 1, 4); /* OEM Revision */
+-    g_array_append_vals(array, "PTL ", 4); /* Creator ID */
++    g_array_append_vals(array, "AML ", 4); /* Creator ID */
+     build_append_int_noprefix(array, 1, 4); /* Creator Revision */
+ }
+ 
 diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
 index e0f0bb5ff0..9c3ec7c862 100644
 --- a/include/hw/acpi/aml-build.h
