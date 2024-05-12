@@ -1,0 +1,28 @@
+diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+index e0f0bb5ff0..9c3ec7c862 100644
+--- a/include/hw/acpi/aml-build.h
++++ b/include/hw/acpi/aml-build.h
+@@ -4,8 +4,8 @@
+ #include "hw/acpi/acpi-defs.h"
+ #include "hw/acpi/bios-linker-loader.h"
+ 
+-#define ACPI_BUILD_APPNAME6 "INTEL "
+-#define ACPI_BUILD_APPNAME8 "PC8086  "
++#define ACPI_BUILD_APPNAME6 "ALASKA"
++#define ACPI_BUILD_APPNAME8 "A M I   "
+ 
+ #define ACPI_BUILD_TABLE_FILE "etc/acpi/tables"
+ #define ACPI_BUILD_RSDP_FILE "etc/acpi/rsdp"
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index a1557ca620..223ea3e73e 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1901,7 +1901,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         abort();
+ #endif
+     } else if (cpu->expose_kvm) {
+-        memcpy(signature, "GenuineIntel", 12);
++        memcpy(signature, "AuthenticAMD", 12);
+         c = &cpuid_data.entries[cpuid_i++];
+         c->function = KVM_CPUID_SIGNATURE | kvm_base;
+         c->eax = KVM_CPUID_FEATURES | kvm_base;
