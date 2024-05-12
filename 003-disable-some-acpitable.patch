@@ -1,0 +1,32 @@
+diff --git a/hw/acpi/vmgenid.c b/hw/acpi/vmgenid.c
+index a39315c1b3..4db7ede6b7 100644
+--- a/hw/acpi/vmgenid.c
++++ b/hw/acpi/vmgenid.c
+@@ -25,6 +25,7 @@
+ void vmgenid_build_acpi(VmGenIdState *vms, GArray *table_data, GArray *guid,
+                         BIOSLinker *linker, const char *oem_id)
+ {
++    return;
+     Aml *ssdt, *dev, *scope, *method, *addr, *if_ctx;
+     uint32_t vgia_offset;
+     QemuUUID guid_le;
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 55b5bc1f4f..e5c22ff59f 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -947,6 +947,7 @@ static Aml *build_vmbus_device_aml(VMBusBridge *vmbus_bridge)
+ 
+ static void build_dbg_aml(Aml *table)
+ {
++    return;
+     Aml *field;
+     Aml *method;
+     Aml *while_ctx;
+@@ -2220,6 +2221,7 @@ static void
+ build_waet(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+            const char *oem_table_id)
+ {
++    return;
+     AcpiTable table = { .sig = "WAET", .rev = 1, .oem_id = oem_id,
+                         .oem_table_id = oem_table_id };
+ 
