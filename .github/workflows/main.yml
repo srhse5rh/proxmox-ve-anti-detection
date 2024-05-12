@@ -122,11 +122,13 @@ jobs:
 
       - run: |
           sed -i 's/--disable-download//' debian/rules
-          wget ${{ env.patch1 }} -O qemu/001.patch
-          wget ${{ env.patch2 }} -O qemu/002.patch
           cd qemu
-          patch -p1 < 001.patch
-          patch -p1 < 002.patch
+          num=001
+          for i in '${{ env.patch}}'; do
+            wget "$i" -O $num.patch
+            patch -p1 < $num.patch
+            ((num++))
+          done
 
       # - name: Debugging with tmate
       #   run: |
