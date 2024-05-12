@@ -26,29 +26,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: proxmox/pve-qemu
-      #     fetch-depth: 0
-      #     submodules: 'true'
-      #     ref: ${{ env.commitid }}
-
       - name: set env
         run: |
-          if [ '${{ inputs.patch1 }}' != '' ];
+          if [ '${{ inputs.patchs }}' != '' ];
           then
-            echo "patch1=${{ inputs.patch1 }}" >> "${{ github.env }}"
-          fi
-          if [ '${{ inputs.patch2 }}' != '' ];
-          then
-            echo "patch2=${{ inputs.patch2 }}" >> "${{ github.env }}"
+            echo "patchs=${{ inputs.patch1 }}" >> "${{ github.env }}"
           fi
           if [ '${{ inputs.commitid }}' != '' ];
           then
             echo "commitid=${{ inputs.commitid }}" >> "${{ github.env }}"
           fi
-          # echo "modulehash=$(git submodule status)" > "${{ github.env }}"
 
   build:
     runs-on: ubuntu-latest
