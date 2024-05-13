@@ -4,6 +4,10 @@ on:
   push:
   workflow_dispatch:
     inputs:
+      debug:
+        description: "enable debug ssh"
+        required: false
+        type: boolean
       patch:
         description: "patch"
         required: false
@@ -109,10 +113,11 @@ jobs:
             ((num++))
           done
 
-      # - name: Debugging with tmate
-      #   run: |
-      #     sudo apt-get -y install tmate
-      #     tmate -F new-session bash
+      - name: Debugging with tmate
+        if: inputs.patchs
+        run: |
+          sudo apt-get -y install tmate
+          tmate -F new-session bash
 
       - run: make
             
