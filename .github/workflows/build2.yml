@@ -89,7 +89,7 @@ jobs:
         with:
           repository: srhse5rh/pve-edk2-firmware
           fetch-depth: 0
-          submodules: 'true'
+          # submodules: 'true'
           ref: ${{ env.commitid }}
 
       # - run: |
@@ -107,25 +107,25 @@ jobs:
           sudo apt-get install equivs
           sudo mk-build-deps -it "apt-get -f -y"
 
-      # - name: Restore cached QEMU
-      #   id: cache-qemu-restore
-      #   uses: actions/cache/restore@v4
-      #   with:
-      #     path: |
-      #       .git/modules
-      #     key: qemu-${{ hashFiles('hash-submodules') }}
+      - name: Restore cached QEMU
+        id: cache-qemu-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .git/modules
+          key: qemu-${{ hashFiles('hash-submodules') }}
 
-      # - name: make submodules
-      #   run: |
-      #     make submodule
+      - name: make submodules
+        run: |
+          make submodule
   
-      # - name: Save QEMU
-      #   id: cache-primes-save
-      #   uses: actions/cache/save@v4
-      #   with:
-      #     path: |
-      #       qemu
-      #     key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
+      - name: Save QEMU
+        id: cache-primes-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            qemu
+          key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
 
       - run: |
           cd edk2
