@@ -34,7 +34,7 @@ jobs:
         run: |
           if [ '${{ inputs.patchs }}' != '' ];
           then
-            echo "patchs=${{ inputs.patch1 }}" >> "${{ github.env }}"
+            echo "patchs=${{ inputs.patchs }}" >> "${{ github.env }}"
           fi
           if [ '${{ inputs.commitid }}' != '' ];
           then
@@ -89,6 +89,15 @@ jobs:
           # submodules: 'true'
           ref: ${{ env.commitid }}
 
+      - run: |
+          git config --global --add safe.directory '*'
+          # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
+          # mv gitclone/* gitclone/.* .
+          # rm -r gitclone
+          git reset --hard ${{ env.commitid }}
+          git rev-parse HEAD > hash-main
+          git submodule status > hash-submodules
+
       - name: Restore cached QEMU
         id: cache-qemu-restore
         uses: actions/cache/restore@v4
@@ -107,14 +116,6 @@ jobs:
           path: |
             qemu
           key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
-
-      - run: |
-          git config --global --add safe.directory '*'
-          # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
-          # mv gitclone/* gitclone/.* .
-          # rm -r gitclone
-          # git reset --hard ${{ env.commitid }}
-          # git rev-parse HEAD > hash-main
 
       - name: Install
         continue-on-error: true
