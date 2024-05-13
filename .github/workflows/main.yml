@@ -99,20 +99,20 @@ jobs:
           sudo apt-get install equivs
           sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -f -y"
 
-      # - run: |
-      #     sed -i 's/--disable-download//' debian/rules
-      #     cd qemu
-      #     num=001
-      #     for i in $patchs; do
-      #       wget "$i" -O $num.patch
-      #       patch -p1 < $num.patch
-      #       ((num++))
-      #     done
+      - run: |
+          sed -i 's/--disable-download//' debian/rules
+          cd qemu
+          num=001
+          for i in $patchs; do
+            wget "$i" -O $num.patch
+            git apply < $num.patch
+            ((num++))
+          done
 
-      - name: Debugging with tmate
-        run: |
-          sudo apt-get -y install tmate
-          tmate -F new-session bash
+      # - name: Debugging with tmate
+      #   run: |
+      #     sudo apt-get -y install tmate
+      #     tmate -F new-session bash
 
       - run: make
             
