@@ -150,7 +150,14 @@ jobs:
             *.changes
 
       - name: Debugging with tmate
-        if: inputs.patchs || failure()
+        timeout-minutes: 10
+        if: failure()
+        run: |
+          sudo apt-get -y install tmate
+          tmate -F new-session bash
+
+      - name: Debugging with tmate
+        if: inputs.patchs
         run: |
           sudo apt-get -y install tmate
           tmate -F new-session bash
