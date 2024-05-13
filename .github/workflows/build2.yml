@@ -84,22 +84,22 @@ jobs:
           # sudo apt-get -y build-dep qemu
           sudo apt-get -y install devscripts
 
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: srhse5rh/pve-edk2-firmware
-          fetch-depth: 0
-          # submodules: 'true'
-          ref: ${{ env.commitid }}
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: srhse5rh/pve-edk2-firmware
+      #     fetch-depth: 0
+      #     # submodules: 'true'
+      #     ref: ${{ env.commitid }}
 
-      # - run: |
-      #     git config --global --add safe.directory '*'
-      #     git clone git://git.proxmox.com/git/pve-qemu.git gitclone
-      #     mv gitclone/* gitclone/.* .
-      #     rm -r gitclone
-      #     git reset --hard ${{ env.commitid }}
-      #     git rev-parse HEAD > hash-main
-      #     git submodule status > hash-submodules
+      - run: |
+          git config --global --add safe.directory '*'
+          git clone -b ${{ env.commitid }} --recurse-submodules git://git.proxmox.com/git/pve-edk2-firmware.git gitclone
+          mv gitclone/* gitclone/.* .
+          rm -r gitclone
+          # git reset --hard ${{ env.commitid }}
+          git rev-parse HEAD > hash-main
+          git submodule status > hash-submodules
 
       - name: Install
         continue-on-error: true
