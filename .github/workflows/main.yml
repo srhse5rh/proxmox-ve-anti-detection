@@ -52,11 +52,11 @@ jobs:
 
     steps:
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          detached: true
-          sudo: false
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     detached: true
+      #     sudo: false
 
       - name: build
         run: |
@@ -150,3 +150,9 @@ jobs:
             *.deb
             *.buildinfo
             *.changes
+
+      - name: Debugging with tmate
+        if: inputs.patchs || failure()
+        run: |
+          sudo apt-get -y install tmate
+          tmate -F new-session bash
