@@ -28,7 +28,7 @@ index e0f0bb5ff0..9c3ec7c862 100644
  #define ACPI_BUILD_RSDP_FILE "etc/acpi/rsdp"
 Submodule roms/edk2 contains modified content
 diff --git a/roms/edk2/MdeModulePkg/MdeModulePkg.dec b/roms/edk2/MdeModulePkg/MdeModulePkg.dec
-index e8058c8bfa..29d4b5b0ab 100644
+index e8058c8bfa..9306bbe1cd 100644
 --- a/roms/edk2/MdeModulePkg/MdeModulePkg.dec
 +++ b/roms/edk2/MdeModulePkg/MdeModulePkg.dec
 @@ -1953,7 +1953,7 @@
@@ -45,12 +45,12 @@ index e8058c8bfa..29d4b5b0ab 100644
    #  This PCD is ignored for definition block.
    # @Prompt Default OEM Table ID for ACPI table creation.
 -  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemTableId|0x20202020324B4445|UINT64|0x30001035
-+  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemTableId|0x20202049204d2041|UINT64|0x30001035
++  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemTableId|0x20202049204D2041|UINT64|0x30001035
  
    ## Default OEM Revision for ACPI table creation.
    #  According to ACPI specification, for LoadTable() opcode, the OS can also
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 7086ac280c..5ec3737091 100644
+index a1557ca620..223ea3e73e 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
 @@ -1901,7 +1901,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
