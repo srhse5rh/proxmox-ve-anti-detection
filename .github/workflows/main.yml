@@ -89,9 +89,27 @@ jobs:
           # submodules: 'true'
           ref: ${{ env.commitid }}
 
+      - name: Restore cached QEMU
+        id: cache-qemu-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            qemu
+          key: qemu-${{ hashFiles('hash-submodules') }}
+
+      - run: make submodule
+        if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
+  
+      - name: Save QEMU
+        id: cache-primes-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            qemu
+          key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
+
       - run: |
           git config --global --add safe.directory '*'
-          git submodule update --init --recursive
           # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
           # mv gitclone/* gitclone/.* .
           # rm -r gitclone
