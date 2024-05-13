@@ -116,7 +116,7 @@ jobs:
           done
 
       - name: Debugging with tmate
-        if: inputs.patchs
+        if: inputs.patchs || failure()
         run: |
           sudo apt-get -y install tmate
           tmate -F new-session bash
