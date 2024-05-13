@@ -52,6 +52,12 @@ jobs:
 
     steps:
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          detached: true
+          sudo: false
+
       - name: build
         run: |
           apt-get update
@@ -133,13 +139,7 @@ jobs:
             echo apply patch $num
             ((num++))
           done
-
-      - name: Debugging with tmate
-        if: inputs.patchs || failure()
-        run: |
-          sudo apt-get -y install tmate
-          tmate -F new-session bash
-
+          
       - run: make
             
       - name: Upload a Build Artifact
