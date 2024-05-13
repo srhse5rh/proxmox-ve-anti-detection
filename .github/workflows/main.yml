@@ -99,32 +99,11 @@ jobs:
           sudo apt-get install equivs
           sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -f -y"
 
-      # - name: Restore cached QEMU
-      #   id: cache-qemu-restore
-      #   uses: actions/cache/restore@v4
-      #   with:
-      #     path: |
-      #       qemu
-      #     key: qemu-${{ env.commitid }}
-
-      # - name: make submodule
-      #   if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
-      #   run: |
-      #     make submodule
-
-      # - name: Save QEMU
-      #   id: cache-primes-save
-      #   uses: actions/cache/save@v4
-      #   with:
-      #     path: |
-      #       qemu
-      #     key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
-
       - run: |
           sed -i 's/--disable-download//' debian/rules
           cd qemu
           num=001
-          for i in "$patchs"; do
+          for i in $patchs; do
             wget "$i" -O $num.patch
             patch -p1 < $num.patch
             ((num++))
