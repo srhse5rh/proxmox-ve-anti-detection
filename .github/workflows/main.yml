@@ -104,6 +104,12 @@ jobs:
           git rev-parse HEAD > hash-main
           git submodule status > hash-submodules
 
+      - name: Install
+        continue-on-error: true
+        run: |
+          sudo apt-get install equivs
+          sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -f -y"
+
       - name: Restore cached QEMU
         id: cache-qemu-restore
         uses: actions/cache/restore@v4
@@ -112,8 +118,11 @@ jobs:
             qemu
           key: qemu-${{ hashFiles('hash-submodules') }}
 
-      - run: make submodule
+      - name: make submodlues
         if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
+        run: |
+          # sudo apt install meson
+          make submodule
   
       - name: Save QEMU
         id: cache-primes-save
@@ -122,12 +131,6 @@ jobs:
           path: |
             qemu
           key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
-
-      - name: Install
-        continue-on-error: true
-        run: |
-          sudo apt-get install equivs
-          sudo mk-build-deps -it "apt -o Debug::pkgProblemResolver=yes -f -y"
 
       - run: |
           sed -i 's/--disable-download//' debian/rules
