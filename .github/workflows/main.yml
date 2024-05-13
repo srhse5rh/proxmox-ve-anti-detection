@@ -115,10 +115,8 @@ jobs:
             .git/modules
           key: qemu-${{ hashFiles('hash-submodules') }}
 
-      - name: make submodlues
-        if: steps.cache-qemu-restore.outputs.cache-hit != 'true'
+      - name: make submodules
         run: |
-          # sudo apt install meson
           make submodule
   
       - name: Save QEMU
