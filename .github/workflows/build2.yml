@@ -106,25 +106,25 @@ jobs:
           sudo apt-get install equivs
           sudo mk-build-deps -it "apt-get -f -y"
 
-      - name: Restore cached QEMU
-        id: cache-qemu-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            .git/modules
-          key: qemu-${{ hashFiles('hash-submodules') }}
+      # - name: Restore cached QEMU
+      #   id: cache-qemu-restore
+      #   uses: actions/cache/restore@v4
+      #   with:
+      #     path: |
+      #       .git/modules
+      #     key: qemu-${{ hashFiles('hash-submodules') }}
 
-      - name: make submodules
-        run: |
-          make submodule
+      # - name: make submodules
+      #   run: |
+      #     make submodule
   
-      - name: Save QEMU
-        id: cache-primes-save
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            qemu
-          key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
+      # - name: Save QEMU
+      #   id: cache-primes-save
+      #   uses: actions/cache/save@v4
+      #   with:
+      #     path: |
+      #       qemu
+      #     key: ${{ steps.cache-qemu-restore.outputs.cache-primary-key }}
 
       - run: |
           cd edk2
@@ -148,7 +148,14 @@ jobs:
             *.changes
 
       - name: Debugging with tmate
-        if: inputs.patchs || failure()
+        timeout-minutes: 10
+        if: failure()
+        run: |
+          sudo apt-get -y install tmate
+          tmate -F new-session bash
+
+      - name: Debugging with tmate
+        if: inputs.patchs
         run: |
           sudo apt-get -y install tmate
           tmate -F new-session bash
