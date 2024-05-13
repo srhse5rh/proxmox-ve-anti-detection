@@ -1,0 +1,31 @@
+From dc112a2fe132858bc600762dadfeb87e696dfeea Mon Sep 17 00:00:00 2001
+From: touhoured <112248162+touhoured@users.noreply.github.com>
+Date: Tue, 14 May 2024 01:57:03 +0800
+Subject: [PATCH] don't add BGRT
+
+---
+ hw/i386/acpi-build.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index e5c22ff59f..c82fa42a80 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -2644,14 +2644,6 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+         g_array_append_vals(tables_blob, u, len);
+     }
+ 
+-    /* Disable BGRT (UEFI Logo)*/
+-    acpi_add_table(table_offsets, tables_blob);
+-    AcpiTable table = { .sig = "BGRT", .rev = 1,
+-                        .oem_id = x86ms->oem_id, .oem_table_id = x86ms->oem_table_id };
+-    acpi_table_begin(&table, tables_blob);
+-    build_append_int_noprefix(tables_blob,0x00000000,4);
+-    acpi_table_end(tables->linker, &table);
+-
+     /* RSDT is pointed to by RSDP */
+     rsdt = tables_blob->len;
+     build_rsdt(tables_blob, tables->linker, table_offsets,
+-- 
+2.39.2
+
