@@ -1,4 +1,4 @@
-name: build
+name: pve-edk2-firmware
 
 on:
   push:

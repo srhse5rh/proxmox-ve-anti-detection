@@ -1,4 +1,4 @@
-name: build
+name: pve-qemu
 
 on:
   push:
