@@ -87,7 +87,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: proxmox/pve-edk2-firmware
+          repository: srhse5rh/pve-edk2-firmware
           fetch-depth: 0
           submodules: 'true'
           ref: ${{ env.commitid }}
