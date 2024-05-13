@@ -86,11 +86,12 @@ jobs:
         with:
           repository: proxmox/pve-qemu
           fetch-depth: 0
-          submodules: 'true'
+          # submodules: 'true'
           ref: ${{ env.commitid }}
 
       - run: |
           git config --global --add safe.directory '*'
+          git submodule update --init --recursive
           # git clone git://git.proxmox.com/git/pve-qemu.git gitclone
           # mv gitclone/* gitclone/.* .
           # rm -r gitclone
@@ -110,6 +111,7 @@ jobs:
           for i in $patchs; do
             wget "$i" -O $num.patch
             git apply < $num.patch
+            echo apply patch $num
             ((num++))
           done
 
