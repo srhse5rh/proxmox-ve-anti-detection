@@ -19,7 +19,7 @@ on:
 
 env:
   patchs: https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/001-change-id-to-alaska-and-ami.patch
-  commitid: 17443032f78eaf9ae276f8df9d10c64beec2e048
+  commitid: master
 
 jobs:
   setenv:
