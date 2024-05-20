@@ -94,8 +94,8 @@ jobs:
       - name: clone repo
         run: |
           git config --global --add safe.directory '*'
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           git clone --recurse-submodules git://git.proxmox.com/git/pve-edk2-firmware.git gitclone
           mv gitclone/* gitclone/.* .
           rm -r gitclone
