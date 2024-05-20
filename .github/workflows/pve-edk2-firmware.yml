@@ -18,7 +18,7 @@ on:
         type: string
 
 env:
-  patchs: https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/001-change-id-to-alaska-and-ami.patch
+  patchs: https://github.com/srhse5rh/proxmox-ve-anti-detection/raw/main/pve-edk2-firmware/001-change-id-to-alaska-and-ami.patch
   commitid: master
 
 jobs:
