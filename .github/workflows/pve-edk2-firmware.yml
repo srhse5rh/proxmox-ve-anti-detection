@@ -8,7 +8,7 @@ on:
         description: "enable debug ssh"
         required: false
         type: boolean
-      patch:
+      patchs:
         description: "patch"
         required: false
         type: string
@@ -94,10 +94,10 @@ jobs:
       - name: clone repo
         run: |
           git config --global --add safe.directory '*'
-          git clone -b ${{ env.commitid }} --recurse-submodules git://git.proxmox.com/git/pve-edk2-firmware.git gitclone
+          git clone --recurse-submodules git://git.proxmox.com/git/pve-edk2-firmware.git gitclone
           mv gitclone/* gitclone/.* .
           rm -r gitclone
-          # git reset --hard ${{ env.commitid }}
+          git reset --hard ${{ env.commitid }}
           git rev-parse HEAD > hash-main
           git submodule status > hash-submodules
 
@@ -129,6 +129,7 @@ jobs:
 
       - name: apply patch
         run: |
+          git revert 334229c40993f947a48cfe3b9ac047b19bd62acc
           cd edk2
           git apply $patchs
           # num=1
@@ -141,7 +142,7 @@ jobs:
           
       - run: make
             
-      - name: Upload a Build Artifact
+      - name: upload build artifacts
         uses: actions/upload-artifact@v4.3.1
         with:
           name: pve-edk2-firmware-${{ env.commitid }}
@@ -150,15 +151,15 @@ jobs:
             *.buildinfo
             *.changes
 
-      - name: Debugging with tmate if failure
+      - name: debugging with tmate if failure
         timeout-minutes: 10
         if: failure()
         run: |
           sudo apt-get -y install tmate
           tmate -F new-session bash
 
-      - name: Debugging with tmate if enable debug
-        if: inputs.patchs
+      - name: debugging with tmate if enable debug
+        if: inputs.debug
         run: |
           sudo apt-get -y install tmate
           tmate -F new-session bash
