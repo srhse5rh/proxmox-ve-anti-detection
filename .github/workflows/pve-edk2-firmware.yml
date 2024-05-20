@@ -133,7 +133,8 @@ jobs:
         run: |
           git revert 334229c40993f947a48cfe3b9ac047b19bd62acc
           cd edk2
-          git apply $patchs
+          wget $patchs -O 001.patch
+          git apply 001.patch
           # num=1
           # for i in $patchs; do
           #   wget "$i" -O $num.patch

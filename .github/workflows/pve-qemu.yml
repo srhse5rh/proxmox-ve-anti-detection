@@ -133,7 +133,8 @@ jobs:
         run: |
           sed -i 's/--disable-download//' debian/rules
           cd qemu
-          git apply $patchs
+          wget $patchs -O 001.patch
+          git apply 001.patch
           # num=1
           # for i in $patchs; do
           #   wget "$i" -O $num.patch
