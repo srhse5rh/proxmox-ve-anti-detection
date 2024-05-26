@@ -86,7 +86,7 @@ jobs:
           rm -r gitclone
           if [ '${{ inputs.commitid }}' != '' ];
           then
-            git reset --hard $${{ inputs.commitid }}
+            git reset --hard ${{ inputs.commitid }}
           else
             git reset --hard ${{ env.commitid }}
           fi
