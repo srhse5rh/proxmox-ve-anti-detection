@@ -115,7 +115,7 @@ jobs:
         with:
           path: |
             .git/modules
-          key: qemu-${{ hashFiles('hash-submodules') }}
+          key: pve-edk2-firmware-${{ hashFiles('hash-submodules') }}
 
       - name: make submodules
         run: |
