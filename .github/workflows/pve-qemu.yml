@@ -115,7 +115,7 @@ jobs:
         with:
           path: |
             .git/modules
-          key: qemu-${{ hashFiles('hash-submodules') }}
+          key: pve-qemu-${{ hashFiles('hash-submodules') }}
 
       - name: make submodules
         run: |
